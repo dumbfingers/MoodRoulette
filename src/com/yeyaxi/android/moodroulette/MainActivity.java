@@ -21,74 +21,74 @@ import android.widget.ImageView;
  *
  */
 public class MainActivity extends Activity {
-	
+
 	private static Bitmap imageOriginal, imageScaled;
 	private static Matrix matrix;
 
 	private ImageView dialer;
 	private int dialerHeight, dialerWidth;
-	
+
 	private GestureDetector detector;
-	
+
 	// needed for detecting the inversed rotations
 	private boolean[] quadrantTouched;
 
 	private boolean allowRotating;
-	
+
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
-        // load the image only once
-        if (imageOriginal == null) {
-        	imageOriginal = BitmapFactory.decodeResource(getResources(), R.drawable.graphic_ring);
-        }
-        
-        // initialize the matrix only once
-        if (matrix == null) {
-        	matrix = new Matrix();
-        } else {
-        	// not needed, you can also post the matrix immediately to restore the old state
-        	matrix.reset();
-        }
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-        detector = new GestureDetector(this, new MyGestureDetector());
-        
-        // there is no 0th quadrant, to keep it simple the first value gets ignored
-        quadrantTouched = new boolean[] { false, false, false, false, false };
-        
-        allowRotating = true;
-        
-        dialer = (ImageView) findViewById(R.id.imageView_ring);
-        dialer.setOnTouchListener(new MyOnTouchListener());
-        dialer.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+		// load the image only once
+//		if (imageOriginal == null) {
+//			imageOriginal = BitmapFactory.decodeResource(getResources(), R.drawable.graphic_ring);
+//		}
+//
+//		// initialize the matrix only once
+//		if (matrix == null) {
+//			matrix = new Matrix();
+//		} else {
+//			// not needed, you can also post the matrix immediately to restore the old state
+//			matrix.reset();
+//		}
+//
+//		detector = new GestureDetector(this, new MyGestureDetector());
+//
+//		// there is no 0th quadrant, to keep it simple the first value gets ignored
+//		quadrantTouched = new boolean[] { false, false, false, false, false };
+//
+//		allowRotating = true;
+//
+//		dialer = (ImageView) findViewById(R.id.imageView_ring);
+//		dialer.setOnTouchListener(new MyOnTouchListener());
+//		dialer.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+//
+//			@Override
+//			public void onGlobalLayout() {
+//				// method called more than once, but the values only need to be initialized one time
+//				if (dialerHeight == 0 || dialerWidth == 0) {
+//					dialerHeight = dialer.getHeight();
+//					dialerWidth = dialer.getWidth();
+//
+//					// resize
+//					Matrix resize = new Matrix();
+//					resize.postScale((float)Math.min(dialerWidth, dialerHeight) / (float)imageOriginal.getWidth(), (float)Math.min(dialerWidth, dialerHeight) / (float)imageOriginal.getHeight());
+//					imageScaled = Bitmap.createBitmap(imageOriginal, 0, 0, imageOriginal.getWidth(), imageOriginal.getHeight(), resize, false);
+//
+//					// translate to the image view's center
+//					float translateX = dialerWidth / 2 - imageScaled.getWidth() / 2;
+//					float translateY = dialerHeight / 2 - imageScaled.getHeight() / 2;
+//					matrix.postTranslate(translateX, translateY);
+//
+//					dialer.setImageBitmap(imageScaled);
+//					dialer.setImageMatrix(matrix);
+//				}
+//			}
+//		});
 
-        	@Override
-			public void onGlobalLayout() {
-        		// method called more than once, but the values only need to be initialized one time
-        		if (dialerHeight == 0 || dialerWidth == 0) {
-        			dialerHeight = dialer.getHeight();
-        			dialerWidth = dialer.getWidth();
-        			
-        			// resize
-					Matrix resize = new Matrix();
-					resize.postScale((float)Math.min(dialerWidth, dialerHeight) / (float)imageOriginal.getWidth(), (float)Math.min(dialerWidth, dialerHeight) / (float)imageOriginal.getHeight());
-					imageScaled = Bitmap.createBitmap(imageOriginal, 0, 0, imageOriginal.getWidth(), imageOriginal.getHeight(), resize, false);
-					
-					// translate to the image view's center
-					float translateX = dialerWidth / 2 - imageScaled.getWidth() / 2;
-					float translateY = dialerHeight / 2 - imageScaled.getHeight() / 2;
-					matrix.postTranslate(translateX, translateY);
-					
-					dialer.setImageBitmap(imageScaled);
-					dialer.setImageMatrix(matrix);
-        		}
-			}
-		});
-        
-    }
-	
+	}
+
 	/**
 	 * Rotate the dialer.
 	 * 
@@ -96,10 +96,10 @@ public class MainActivity extends Activity {
 	 */
 	private void rotateDialer(float degrees) {
 		matrix.postRotate(degrees, dialerWidth / 2, dialerHeight / 2);
-		
+
 		dialer.setImageMatrix(matrix);
 	}
-	
+
 	/**
 	 * @return The angle of the unit circle with the image view's center
 	 */
@@ -108,22 +108,22 @@ public class MainActivity extends Activity {
 		double y = dialerHeight - yTouch - (dialerHeight / 2d);
 
 		switch (getQuadrant(x, y)) {
-			case 1:
-				return Math.asin(y / Math.hypot(x, y)) * 180 / Math.PI;
-			
-			case 2:
-			case 3:
-				return 180 - (Math.asin(y / Math.hypot(x, y)) * 180 / Math.PI);
-			
-			case 4:
-				return 360 + Math.asin(y / Math.hypot(x, y)) * 180 / Math.PI;
-			
-			default:
-				// ignore, does not happen
-				return 0;
+		case 1:
+			return Math.asin(y / Math.hypot(x, y)) * 180 / Math.PI;
+
+		case 2:
+		case 3:
+			return 180 - (Math.asin(y / Math.hypot(x, y)) * 180 / Math.PI);
+
+		case 4:
+			return 360 + Math.asin(y / Math.hypot(x, y)) * 180 / Math.PI;
+
+		default:
+			// ignore, does not happen
+			return 0;
 		}
 	}
-	
+
 	/**
 	 * @return The selected quadrant.
 	 */
@@ -134,58 +134,58 @@ public class MainActivity extends Activity {
 			return y >= 0 ? 2 : 3;
 		}
 	}
-	
+
 	/**
 	 * Simple implementation of an {@link OnTouchListener} for registering the dialer's touch events. 
 	 */
 	private class MyOnTouchListener implements OnTouchListener {
-		
+
 		private double startAngle;
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 
 			switch (event.getAction()) {
-				
-				case MotionEvent.ACTION_DOWN:
-					
-					// reset the touched quadrants
-					for (int i = 0; i < quadrantTouched.length; i++) {
-						quadrantTouched[i] = false;
-					}
-					
-					allowRotating = false;
-					
-					startAngle = getAngle(event.getX(), event.getY());
-					break;
-					
-				case MotionEvent.ACTION_MOVE:
-					double currentAngle = getAngle(event.getX(), event.getY());
-					rotateDialer((float) (startAngle - currentAngle));
-					startAngle = currentAngle;
-					break;
-					
-				case MotionEvent.ACTION_UP:
-					allowRotating = true;
-					break;
+
+			case MotionEvent.ACTION_DOWN:
+
+				// reset the touched quadrants
+				for (int i = 0; i < quadrantTouched.length; i++) {
+					quadrantTouched[i] = false;
+				}
+
+				allowRotating = false;
+
+				startAngle = getAngle(event.getX(), event.getY());
+				break;
+
+			case MotionEvent.ACTION_MOVE:
+				double currentAngle = getAngle(event.getX(), event.getY());
+				rotateDialer((float) (startAngle - currentAngle));
+				startAngle = currentAngle;
+				break;
+
+			case MotionEvent.ACTION_UP:
+				allowRotating = true;
+				break;
 			}
-			
+
 			// set the touched quadrant to true
 			quadrantTouched[getQuadrant(event.getX() - (dialerWidth / 2), dialerHeight - event.getY() - (dialerHeight / 2))] = true;
-			
+
 			detector.onTouchEvent(event);
-			
+
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Simple implementation of a {@link SimpleOnGestureListener} for detecting a fling event. 
 	 */
 	private class MyGestureDetector extends SimpleOnGestureListener {
 		@Override
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-			
+
 			// get the quadrant of the start and the end of the fling
 			int q1 = getQuadrant(e1.getX() - (dialerWidth / 2), dialerHeight - e1.getY() - (dialerHeight / 2));
 			int q2 = getQuadrant(e2.getX() - (dialerWidth / 2), dialerHeight - e2.getY() - (dialerHeight / 2));
@@ -199,7 +199,7 @@ public class MainActivity extends Activity {
 					|| ((q1 == 3 && q2 == 4) || (q1 == 4 && q2 == 3))
 					|| (q1 == 2 && q2 == 4 && quadrantTouched[3])
 					|| (q1 == 4 && q2 == 2 && quadrantTouched[3])) {
-			
+
 				dialer.post(new FlingRunnable(-1 * (velocityX + velocityY)));
 			} else {
 				// the normal rotation
@@ -209,7 +209,7 @@ public class MainActivity extends Activity {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * A {@link Runnable} for animating the the dialer's fling.
 	 */
