@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
 	private String[] captions = {
 		"Refresh",
 		"Provoke",
-		"Harmonies",
+		"Harmonised",
 		"Remember",
 		"Amaze"
 	};
@@ -240,159 +240,195 @@ public class MainActivity extends Activity {
 					switch (selectedId) {
 					case 0:
 						//sad: 3, 2
-						int i = 0;
-						while (i < scale) {
-							playMusic(sadSong[i]);
-							i++;
-						}
-//						descriptor = getAssets().openFd(sadSong[0]);
-//						playMusic(descriptor);
-//
-//						// play the second one
-//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-//
-//							@Override
-//							public void onCompletion(MediaPlayer mp) {
-//								mp.stop();
-//								mp.reset();
-//								try {
-//									AssetFileDescriptor descriptor = getAssets().openFd(sadSong[1]);
-//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-//									mp.prepare();
-//									mp.start();
-//								} catch (Exception exception) {
-//
-//								}
-//							}
-//						});
+
+						playMusic(sadSong[1]);
+						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+							
+							@Override
+							public void onCompletion(MediaPlayer mp) {
+								// TODO Auto-generated method stub
+								try {
+									mp.reset();
+									playMusic(sadSong[0]);
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalStateException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						});
+						
+
 						break;
 					case 1:
 						//happy: 1, 2
 						// play the first one
+						playMusic(happySong[0]);
+						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+							
+							@Override
+							public void onCompletion(MediaPlayer mp) {
+								// TODO Auto-generated method stub
+								try {
+									mp.reset();
+									playMusic(happySong[1]);
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalStateException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						});
 						
-						int j = 0;
-						while (j < scale) {
-							playMusic(happySong[j]);
-							j++;
-						}
-						
-//						descriptor = getAssets().openFd(happySong[0]);
-//						playMusic(descriptor);
-//						// play the second one
-//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-//
-//							@Override
-//							public void onCompletion(MediaPlayer mp) {
-//								mp.stop();
-//								mp.reset();
-//								try {
-//									AssetFileDescriptor descriptor = getAssets().openFd(happySong[1]);
-//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-//									mp.prepare();
-//									mp.start();
-//								} catch (IOException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//
-//							}
-//
-//						});
 						break;
 					case 2:
-						//excited: 2, 4
-						// play the first one
 						
-						int k = 0;
-						while (k < scale) {
-							playMusic(excitedSong[k]);
-							k++;
-						}
+						playMusic(excitedSong[0]);
+						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+							
+							@Override
+							public void onCompletion(MediaPlayer mp) {
+								// TODO Auto-generated method stub
+								try {
+									mp.reset();
+									playMusic(excitedSong[1]);
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalStateException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						});
 						
-//						descriptor = getAssets().openFd(excitedSong[0]);
-//
-//						playMusic(descriptor);
-//						// play the second one
-//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-//
-//							@Override
-//							public void onCompletion(MediaPlayer mp) {
-//								mp.stop();
-//								mp.reset();
-//								try {
-//									AssetFileDescriptor descriptor = getAssets().openFd(excitedSong[1]);
-//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-//									mp.prepare();
-//									mp.start();
-//								} catch (IOException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//
-//							}
-//						});
+//				
 						break;
 					case 3:
-						//angry: 3
-						int m = 0;
-						while (m < scale) {
-							playMusic(angrySong[m]);
-							m++;
-						}
-//						descriptor = getAssets().openFd(angrySong[0]);
-//
-//						playMusic(descriptor);
-//						// play the second one
-//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-//
-//							@Override
-//							public void onCompletion(MediaPlayer mp) {
-//								mp.stop();
-//								mp.reset();
-//								try {
-//									AssetFileDescriptor descriptor = getAssets().openFd(angrySong[1]);
-//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-//									mp.prepare();
-//									mp.start();
-//								} catch (IOException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//
-//							}
-//						});
+						
+						playMusic(angrySong[0]);
+						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+							
+							@Override
+							public void onCompletion(MediaPlayer mp) {
+								// TODO Auto-generated method stub
+								try {
+									mp.reset();
+									playMusic(angrySong[1]);
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalStateException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						});
+						
 						break;
 					case 4:
 						//relaxing: 5, 5
-						int n = 0;
-						while (n < scale) {
-							playMusic(relaxSong[n]);
-							n++;
-						}
-//						descriptor = getAssets().openFd(relaxSong[0]);
-//
-//						playMusic(descriptor);
-//						// play the second one
-//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-//
-//							@Override
-//							public void onCompletion(MediaPlayer mp) {
-//								mp.stop();
-//								mp.reset();
-//								try {
-//									AssetFileDescriptor descriptor = getAssets().openFd(relaxSong[1]);
-//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-//									mp.prepare();
-//									mp.start();
-//								} catch (IOException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//							}
-//						});
+						playMusic(relaxSong[1]);
+						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+							
+							@Override
+							public void onCompletion(MediaPlayer mp) {
+								// TODO Auto-generated method stub
+								try {
+									mp.reset();
+									playMusic(relaxSong[0]);
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalStateException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						});
+						
+						break;
+					}
+					
+				}
+				
+				if (scale == 2) {
+					switch (selectedId) {
+					case 1:
+						break;
+					case 2:
+						break;
+					case 3:
+						break;
+					case 4:
+						//relaxing: 5, 5
+						playMusic(relaxSong[2]);
+						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+							
+							@Override
+							public void onCompletion(MediaPlayer mp) {
+								// TODO Auto-generated method stub
+								try {
+									mp.reset();
+									playMusic(relaxSong[1]);
+									mp.setOnCompletionListener(new OnCompletionListener() {
+										
+										@Override
+										public void onCompletion(MediaPlayer mp) {
+											// TODO Auto-generated method stub
+											mp.reset();
+											try {
+												playMusic(relaxSong[0]);
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalStateException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+									});
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalStateException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						});
+						break;
+
+					case 0:
 						break;
 					}
 				}
+				
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
