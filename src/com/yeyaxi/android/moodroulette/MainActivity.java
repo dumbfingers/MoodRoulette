@@ -1,5 +1,6 @@
 package com.yeyaxi.android.moodroulette;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -17,9 +18,8 @@ import com.digitalaria.gama.wheel.WheelAdapter.OnItemSelectionUpdatedListener;
 import com.digitalaria.gama.wheel.WheelAdapter.OnWheelRotationListener;
 
 /**
- * <a href="http://www.vrallev.net">About the author</a>
  * 
- * @author Ralf Wondratschek
+ * @author Yaxi Ye
  * @version 1.0
  *
  */
@@ -36,11 +36,11 @@ public class MainActivity extends Activity {
 //			R.drawable.music_conductor_96, //3
 //			R.drawable.piano_96 }; //4
 //			R.drawable.images0, //0
-			R.drawable.images1, //1
-			R.drawable.images2, //2
-			R.drawable.images3, //3
-			R.drawable.images4, //4
-			R.drawable.images5, //5
+			R.drawable.images1, //1 sad
+			R.drawable.images2, //2 happy
+			R.drawable.images3, //3 excited
+			R.drawable.images4, //4 angry
+			R.drawable.images5, //5 relaxing
 //			R.drawable.images6, //6
 //			R.drawable.images7, //7
 	};
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 					} else {
 						selected = selected - 1;
 					}
-					Log.d(TAG, "Selected: " + selected);
+//					Log.d(TAG, "Selected: " + selected);
 
 					Toast.makeText(getApplication(), "Selected: " + selected, Toast.LENGTH_SHORT).show();
 				}
@@ -122,7 +122,14 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onItemSelectionUpdated(View view, int index) {
-				//				Log.d(TAG, "Selected (on 12 o'clock): " + index);
+				// This one is updated while hovering the wheel
+				if (index == 0) {
+					Log.d(TAG, "Hovering selected: " + String.valueOf(icons.length - 1));
+				} else {
+					int i = index - 1;
+					Log.d(TAG, "Hovering selected: " + i);
+				}
+				Log.d(TAG, "Currently Selected (on 12 o'clock): " + index);
 			}
 		});
 	}
@@ -139,152 +146,5 @@ public class MainActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-
-
-
 	}
-
-	//	/**
-	//	 * Rotate the dialer.
-	//	 * 
-	//	 * @param degrees The degrees, the dialer should get rotated.
-	//	 */
-	//	private void rotateDialer(float degrees) {
-	//		matrix.postRotate(degrees, dialerWidth / 2, dialerHeight / 2);
-	//
-	//		dialer.setImageMatrix(matrix);
-	//	}
-	//
-	//	/**
-	//	 * @return The angle of the unit circle with the image view's center
-	//	 */
-	//	private double getAngle(double xTouch, double yTouch) {
-	//		double x = xTouch - (dialerWidth / 2d);
-	//		double y = dialerHeight - yTouch - (dialerHeight / 2d);
-	//
-	//		switch (getQuadrant(x, y)) {
-	//		case 1:
-	//			return Math.asin(y / Math.hypot(x, y)) * 180 / Math.PI;
-	//
-	//		case 2:
-	//		case 3:
-	//			return 180 - (Math.asin(y / Math.hypot(x, y)) * 180 / Math.PI);
-	//
-	//		case 4:
-	//			return 360 + Math.asin(y / Math.hypot(x, y)) * 180 / Math.PI;
-	//
-	//		default:
-	//			// ignore, does not happen
-	//			return 0;
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * @return The selected quadrant.
-	//	 */
-	//	private static int getQuadrant(double x, double y) {
-	//		if (x >= 0) {
-	//			return y >= 0 ? 1 : 4;
-	//		} else {
-	//			return y >= 0 ? 2 : 3;
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * Simple implementation of an {@link OnTouchListener} for registering the dialer's touch events. 
-	//	 */
-	//	private class MyOnTouchListener implements OnTouchListener {
-	//
-	//		private double startAngle;
-	//
-	//		@Override
-	//		public boolean onTouch(View v, MotionEvent event) {
-	//
-	//			switch (event.getAction()) {
-	//
-	//			case MotionEvent.ACTION_DOWN:
-	//
-	//				// reset the touched quadrants
-	//				for (int i = 0; i < quadrantTouched.length; i++) {
-	//					quadrantTouched[i] = false;
-	//				}
-	//
-	//				allowRotating = false;
-	//
-	//				startAngle = getAngle(event.getX(), event.getY());
-	//				break;
-	//
-	//			case MotionEvent.ACTION_MOVE:
-	//				double currentAngle = getAngle(event.getX(), event.getY());
-	//				rotateDialer((float) (startAngle - currentAngle));
-	//				startAngle = currentAngle;
-	//				break;
-	//
-	//			case MotionEvent.ACTION_UP:
-	//				allowRotating = true;
-	//				break;
-	//			}
-	//
-	//			// set the touched quadrant to true
-	//			quadrantTouched[getQuadrant(event.getX() - (dialerWidth / 2), dialerHeight - event.getY() - (dialerHeight / 2))] = true;
-	//
-	//			detector.onTouchEvent(event);
-	//
-	//			return true;
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * Simple implementation of a {@link SimpleOnGestureListener} for detecting a fling event. 
-	//	 */
-	//	private class MyGestureDetector extends SimpleOnGestureListener {
-	//		@Override
-	//		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-	//
-	//			// get the quadrant of the start and the end of the fling
-	//			int q1 = getQuadrant(e1.getX() - (dialerWidth / 2), dialerHeight - e1.getY() - (dialerHeight / 2));
-	//			int q2 = getQuadrant(e2.getX() - (dialerWidth / 2), dialerHeight - e2.getY() - (dialerHeight / 2));
-	//
-	//			// the inversed rotations
-	//			if ((q1 == 2 && q2 == 2 && Math.abs(velocityX) < Math.abs(velocityY))
-	//					|| (q1 == 3 && q2 == 3)
-	//					|| (q1 == 1 && q2 == 3)
-	//					|| (q1 == 4 && q2 == 4 && Math.abs(velocityX) > Math.abs(velocityY))
-	//					|| ((q1 == 2 && q2 == 3) || (q1 == 3 && q2 == 2))
-	//					|| ((q1 == 3 && q2 == 4) || (q1 == 4 && q2 == 3))
-	//					|| (q1 == 2 && q2 == 4 && quadrantTouched[3])
-	//					|| (q1 == 4 && q2 == 2 && quadrantTouched[3])) {
-	//
-	//				dialer.post(new FlingRunnable(-1 * (velocityX + velocityY)));
-	//			} else {
-	//				// the normal rotation
-	//				dialer.post(new FlingRunnable(velocityX + velocityY));
-	//			}
-	//
-	//			return true;
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * A {@link Runnable} for animating the the dialer's fling.
-	//	 */
-	//	private class FlingRunnable implements Runnable {
-	//
-	//		private float velocity;
-	//
-	//		public FlingRunnable(float velocity) {
-	//			this.velocity = velocity;
-	//		}
-	//
-	//		@Override
-	//		public void run() {
-	//			if (Math.abs(velocity) > 5 && allowRotating) {
-	//				rotateDialer(velocity / 75);
-	//				velocity /= 1.0666F;
-	//
-	//				// post this instance again
-	//				dialer.post(this);
-	//			}
-	//		}
-	//	}
 }
