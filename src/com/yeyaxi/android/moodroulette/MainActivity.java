@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
 					}
 //					Log.d(TAG, "Selected: " + selected);
 					playSelectedMusic(selected);
-					Toast.makeText(getApplication(), "Selected: " + captions[selected], Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplication(), captions[selected], Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -212,7 +212,7 @@ public class MainActivity extends Activity {
 			}
 		}
 		
-//		if (scale == 0) {
+		if (scale == 0) {
 			
 			// Set new music data source
 			try {
@@ -233,178 +233,178 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//		} else {
-//			try {
-////				AssetFileDescriptor descriptor = null;
-//				if (scale == 1) {
-//					switch (selectedId) {
-//					case 0:
-//						//sad: 3, 2
-//						int i = 0;
-//						while (i < scale) {
-//							playMusic(sadSong[i]);
-//							i++;
-//						}
-////						descriptor = getAssets().openFd(sadSong[0]);
-////						playMusic(descriptor);
-////
-////						// play the second one
-////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-////
-////							@Override
-////							public void onCompletion(MediaPlayer mp) {
-////								mp.stop();
-////								mp.reset();
-////								try {
-////									AssetFileDescriptor descriptor = getAssets().openFd(sadSong[1]);
-////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-////									mp.prepare();
-////									mp.start();
-////								} catch (Exception exception) {
-////
-////								}
-////							}
-////						});
-//						break;
-//					case 1:
-//						//happy: 1, 2
-//						// play the first one
-//						
-//						int j = 0;
-//						while (j < scale) {
-//							playMusic(happySong[j]);
-//							j++;
-//						}
-//						
-////						descriptor = getAssets().openFd(happySong[0]);
-////						playMusic(descriptor);
-////						// play the second one
-////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-////
-////							@Override
-////							public void onCompletion(MediaPlayer mp) {
-////								mp.stop();
-////								mp.reset();
-////								try {
-////									AssetFileDescriptor descriptor = getAssets().openFd(happySong[1]);
-////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-////									mp.prepare();
-////									mp.start();
-////								} catch (IOException e) {
-////									// TODO Auto-generated catch block
-////									e.printStackTrace();
-////								}
-////
-////							}
-////
-////						});
-//						break;
-//					case 2:
-//						//excited: 2, 4
-//						// play the first one
-//						
-//						int k = 0;
-//						while (k < scale) {
-//							playMusic(excitedSong[k]);
-//							k++;
-//						}
-//						
-////						descriptor = getAssets().openFd(excitedSong[0]);
-////
-////						playMusic(descriptor);
-////						// play the second one
-////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-////
-////							@Override
-////							public void onCompletion(MediaPlayer mp) {
-////								mp.stop();
-////								mp.reset();
-////								try {
-////									AssetFileDescriptor descriptor = getAssets().openFd(excitedSong[1]);
-////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-////									mp.prepare();
-////									mp.start();
-////								} catch (IOException e) {
-////									// TODO Auto-generated catch block
-////									e.printStackTrace();
-////								}
-////
-////							}
-////						});
-//						break;
-//					case 3:
-//						//angry: 3
-//						int m = 0;
-//						while (m < scale) {
-//							playMusic(angrySong[m]);
-//							m++;
-//						}
-////						descriptor = getAssets().openFd(angrySong[0]);
-////
-////						playMusic(descriptor);
-////						// play the second one
-////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-////
-////							@Override
-////							public void onCompletion(MediaPlayer mp) {
-////								mp.stop();
-////								mp.reset();
-////								try {
-////									AssetFileDescriptor descriptor = getAssets().openFd(angrySong[1]);
-////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-////									mp.prepare();
-////									mp.start();
-////								} catch (IOException e) {
-////									// TODO Auto-generated catch block
-////									e.printStackTrace();
-////								}
-////
-////							}
-////						});
-//						break;
-//					case 4:
-//						//relaxing: 5, 5
-//						int n = 0;
-//						while (n < scale) {
-//							playMusic(relaxSong[n]);
-//							n++;
-//						}
-////						descriptor = getAssets().openFd(relaxSong[0]);
-////
-////						playMusic(descriptor);
-////						// play the second one
-////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
-////
-////							@Override
-////							public void onCompletion(MediaPlayer mp) {
-////								mp.stop();
-////								mp.reset();
-////								try {
-////									AssetFileDescriptor descriptor = getAssets().openFd(relaxSong[1]);
-////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-////									mp.prepare();
-////									mp.start();
-////								} catch (IOException e) {
-////									// TODO Auto-generated catch block
-////									e.printStackTrace();
-////								}
-////							}
-////						});
-//						break;
-//					}
-//				}
-//			} catch (IllegalArgumentException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IllegalStateException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+		} else {
+			try {
+//				AssetFileDescriptor descriptor = null;
+				if (scale == 1) {
+					switch (selectedId) {
+					case 0:
+						//sad: 3, 2
+						int i = 0;
+						while (i < scale) {
+							playMusic(sadSong[i]);
+							i++;
+						}
+//						descriptor = getAssets().openFd(sadSong[0]);
+//						playMusic(descriptor);
+//
+//						// play the second one
+//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+//
+//							@Override
+//							public void onCompletion(MediaPlayer mp) {
+//								mp.stop();
+//								mp.reset();
+//								try {
+//									AssetFileDescriptor descriptor = getAssets().openFd(sadSong[1]);
+//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+//									mp.prepare();
+//									mp.start();
+//								} catch (Exception exception) {
+//
+//								}
+//							}
+//						});
+						break;
+					case 1:
+						//happy: 1, 2
+						// play the first one
+						
+						int j = 0;
+						while (j < scale) {
+							playMusic(happySong[j]);
+							j++;
+						}
+						
+//						descriptor = getAssets().openFd(happySong[0]);
+//						playMusic(descriptor);
+//						// play the second one
+//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+//
+//							@Override
+//							public void onCompletion(MediaPlayer mp) {
+//								mp.stop();
+//								mp.reset();
+//								try {
+//									AssetFileDescriptor descriptor = getAssets().openFd(happySong[1]);
+//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+//									mp.prepare();
+//									mp.start();
+//								} catch (IOException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//
+//							}
+//
+//						});
+						break;
+					case 2:
+						//excited: 2, 4
+						// play the first one
+						
+						int k = 0;
+						while (k < scale) {
+							playMusic(excitedSong[k]);
+							k++;
+						}
+						
+//						descriptor = getAssets().openFd(excitedSong[0]);
+//
+//						playMusic(descriptor);
+//						// play the second one
+//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+//
+//							@Override
+//							public void onCompletion(MediaPlayer mp) {
+//								mp.stop();
+//								mp.reset();
+//								try {
+//									AssetFileDescriptor descriptor = getAssets().openFd(excitedSong[1]);
+//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+//									mp.prepare();
+//									mp.start();
+//								} catch (IOException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//
+//							}
+//						});
+						break;
+					case 3:
+						//angry: 3
+						int m = 0;
+						while (m < scale) {
+							playMusic(angrySong[m]);
+							m++;
+						}
+//						descriptor = getAssets().openFd(angrySong[0]);
+//
+//						playMusic(descriptor);
+//						// play the second one
+//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+//
+//							@Override
+//							public void onCompletion(MediaPlayer mp) {
+//								mp.stop();
+//								mp.reset();
+//								try {
+//									AssetFileDescriptor descriptor = getAssets().openFd(angrySong[1]);
+//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+//									mp.prepare();
+//									mp.start();
+//								} catch (IOException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//
+//							}
+//						});
+						break;
+					case 4:
+						//relaxing: 5, 5
+						int n = 0;
+						while (n < scale) {
+							playMusic(relaxSong[n]);
+							n++;
+						}
+//						descriptor = getAssets().openFd(relaxSong[0]);
+//
+//						playMusic(descriptor);
+//						// play the second one
+//						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+//
+//							@Override
+//							public void onCompletion(MediaPlayer mp) {
+//								mp.stop();
+//								mp.reset();
+//								try {
+//									AssetFileDescriptor descriptor = getAssets().openFd(relaxSong[1]);
+//									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+//									mp.prepare();
+//									mp.start();
+//								} catch (IOException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//							}
+//						});
+						break;
+					}
+				}
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-//		}
+		}
 
 	}
 	
