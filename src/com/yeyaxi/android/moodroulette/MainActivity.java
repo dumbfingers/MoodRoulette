@@ -1,9 +1,13 @@
 package com.yeyaxi.android.moodroulette;
 
+import java.io.IOException;
+
 import android.R.integer;
 import android.app.Activity;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +49,10 @@ public class MainActivity extends Activity {
 //			R.drawable.images7, //7
 	};
 	private int selected = 0;
+	
+	private MediaPlayer mPlayer = null;
+	private boolean isPlaying = false;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,6 +64,7 @@ public class MainActivity extends Activity {
 		scaleRatingAdapter.setItemResource(R.layout.wheel_text_centred);
 		scaleRatingAdapter.setItemTextResource(R.id.text);
 		scaleRatingWheel.setViewAdapter(scaleRatingAdapter);
+		
 		
 		//init the round wheel
 		init();
@@ -124,14 +133,83 @@ public class MainActivity extends Activity {
 			public void onItemSelectionUpdated(View view, int index) {
 				// This one is updated while hovering the wheel
 				if (index == 0) {
-					Log.d(TAG, "Hovering selected: " + String.valueOf(icons.length - 1));
+					selected = icons.length - 1;
+					playSelectedMusic(selected);
+					Log.d(TAG, "Hovering selected: " + String.valueOf(selected));
 				} else {
-					int i = index - 1;
-					Log.d(TAG, "Hovering selected: " + i);
+					selected = index - 1;
+					playSelectedMusic(selected);
+					Log.d(TAG, "Hovering selected: " + selected);
 				}
-				Log.d(TAG, "Currently Selected (on 12 o'clock): " + index);
+//				Log.d(TAG, "Currently Selected (on 12 o'clock): " + index);
 			}
 		});
+	}
+	
+	private void playSelectedMusic(int selectedId) {
+		if (mPlayer == null) {
+			mPlayer = new MediaPlayer();
+		} else {
+			if (mPlayer.isPlaying() == true) {
+				mPlayer.stop();
+				mPlayer.reset();
+			}
+		}
+		
+		// Set new music data source
+		try {
+			AssetFileDescriptor descriptor = getCategorySelector(selectedId);
+			mPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+			
+			descriptor.close();
+			mPlayer.prepare();
+			mPlayer.setVolume(1.0f, 1.0f);
+			// start playing the music
+			mPlayer.start();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		
+	}
+	
+	private AssetFileDescriptor getCategorySelector(int selectedId) throws IOException {
+		AssetFileDescriptor descriptor = getAssets().openFd("sad/Classic1.mp3");
+		
+		switch (selectedId) {
+		case 0:
+			//sad
+			descriptor = getAssets().openFd("sad/Classic1.mp3");
+			break;
+		case 1:
+			//happy
+			descriptor = getAssets().openFd("happy/Classic1.mp3");
+			break;
+		case 2:
+			//excited
+			descriptor = getAssets().openFd("excited/Classic1.mp3");
+			break;
+		case 3:
+			//angry
+			descriptor = getAssets().openFd("angry/Classic1.mp3");
+			break;
+		case 4:
+			//relaxing
+			descriptor = getAssets().openFd("relaxing/Classic1.mp3");
+			break;
+		default:
+			break;
+		}
+		
+		return descriptor;
 	}
 
 	// This function is a helper for drawable data.
