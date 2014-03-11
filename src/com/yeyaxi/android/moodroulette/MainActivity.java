@@ -35,14 +35,14 @@ public class MainActivity extends Activity {
 //			R.drawable.music_96, //2
 //			R.drawable.music_conductor_96, //3
 //			R.drawable.piano_96 }; //4
-			R.drawable.images0, //0
+//			R.drawable.images0, //0
 			R.drawable.images1, //1
 			R.drawable.images2, //2
 			R.drawable.images3, //3
 			R.drawable.images4, //4
 			R.drawable.images5, //5
-			R.drawable.images6, //6
-			R.drawable.images7, //7
+//			R.drawable.images6, //6
+//			R.drawable.images7, //7
 	};
 	private int selected = 0;
 	@Override
