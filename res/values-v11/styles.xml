@@ -8,4 +8,8 @@
         <!-- API 11 theme customizations can go here. -->
     </style>
 
+    <style name="WheelDemoTheme.Light" parent="android:Theme.Holo.Light"></style>
+
+    <style name="WheelDemoTheme" parent="android:Theme.Holo"></style>
+
 </resources>

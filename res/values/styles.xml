@@ -17,4 +17,8 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="WheelDemoTheme.Light" parent="android:Theme.Light"></style>
+
+    <style name="WheelDemoTheme" parent="android:Theme"></style>
+
 </resources>
