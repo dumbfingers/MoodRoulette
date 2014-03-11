@@ -2,12 +2,12 @@ package com.yeyaxi.android.moodroulette;
 
 import java.io.IOException;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -48,10 +48,47 @@ public class MainActivity extends Activity {
 //			R.drawable.images6, //6
 //			R.drawable.images7, //7
 	};
+	
+	private String[] sadSong = {
+			"sad/Classic3.mp3",
+			"sad/Jass2.mp3",
+			"sad/Indie6.mp3"
+	};
+	
+	private String[] happySong = {
+			"happy/Classic1.mp3",
+			"happy/Jazz2.mp3",
+			"happy/Indie5.mp3"
+	};
+	
+	private String[] relaxSong = {
+			"relaxing/Classic5.mp3",
+			"relaxing/Jazz5.mp3",
+			"relaxing/Indie5.mp3"
+	};
+	
+	private String[] excitedSong = {
+			"excited/Classic2.mp3",
+			"excited/Jazz4.mp3",
+			"excited/Indie5.mp3"
+	};
+	
+	private String[] angrySong = {
+			"angry/Classic3.mp3"
+	};
+	
+	private String[] captions = {
+		"Refresh",
+		"Provoke",
+		"Harmonies",
+		"Remember",
+		"Amaze"
+	};
+	
 	private int selected = 0;
 	
 	private MediaPlayer mPlayer = null;
-	private boolean isPlaying = false;
+//	private boolean isPlaying = false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,11 +97,10 @@ public class MainActivity extends Activity {
 		
 		// init the horizontal wheel
 		scaleRatingWheel = (AbstractWheel) findViewById(R.id.scalewheel);
-		NumericWheelAdapter scaleRatingAdapter = new NumericWheelAdapter(this, 1, 5, "%1d");
+		NumericWheelAdapter scaleRatingAdapter = new NumericWheelAdapter(this, 1, 3, "%1d");
 		scaleRatingAdapter.setItemResource(R.layout.wheel_text_centred);
 		scaleRatingAdapter.setItemTextResource(R.id.text);
 		scaleRatingWheel.setViewAdapter(scaleRatingAdapter);
-		
 		
 		//init the round wheel
 		init();
@@ -105,8 +141,8 @@ public class MainActivity extends Activity {
 						selected = selected - 1;
 					}
 //					Log.d(TAG, "Selected: " + selected);
-
-					Toast.makeText(getApplication(), "Selected: " + selected, Toast.LENGTH_SHORT).show();
+					playSelectedMusic(selected);
+					Toast.makeText(getApplication(), "Selected: " + captions[selected], Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -119,11 +155,13 @@ public class MainActivity extends Activity {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				if (position == icons.length - 1) {
-					wheel.setSelectedItem(0);
+					wheel.setSelectedItem(position);
+					playSelectedMusic(0);
 				} else {
 					wheel.setSelectedItem(position + 1);
+					playSelectedMusic(position);
 				}
-				//				Log.d(TAG, "Item Clicked: " + position);
+//				Log.d(TAG, "Item Clicked: " + position);
 			}
 		});
 
@@ -146,43 +184,242 @@ public class MainActivity extends Activity {
 		});
 	}
 	
+	private void playMusic(String path) throws IllegalArgumentException, IllegalStateException, IOException {
+		AssetFileDescriptor descriptor = getAssets().openFd(path);
+		mPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+		mPlayer.prepare();
+		mPlayer.start();
+
+	}
+	
+	/**
+	 * 
+	 * @param selectedId
+	 * 
+	 * This method will interrupt the current playing song
+	 */
 	private void playSelectedMusic(int selectedId) {
+		
+		int scale = scaleRatingWheel.getCurrentItem();
+		Log.d(TAG, "scale: " + scale);
 		if (mPlayer == null) {
 			mPlayer = new MediaPlayer();
 		} else {
 			if (mPlayer.isPlaying() == true) {
 				mPlayer.stop();
+			} else {
 				mPlayer.reset();
 			}
 		}
 		
-		// Set new music data source
-		try {
-			AssetFileDescriptor descriptor = getCategorySelector(selectedId);
-			mPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+//		if (scale == 0) {
 			
-			descriptor.close();
-			mPlayer.prepare();
-			mPlayer.setVolume(1.0f, 1.0f);
-			// start playing the music
-			mPlayer.start();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			// Set new music data source
+			try {
+				AssetFileDescriptor descriptor = getCategorySelector(selectedId);
+				mPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+				descriptor.close();
+				mPlayer.prepare();
+				mPlayer.setVolume(1.0f, 1.0f);
+				// start playing the music
+				mPlayer.start();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//		} else {
+//			try {
+////				AssetFileDescriptor descriptor = null;
+//				if (scale == 1) {
+//					switch (selectedId) {
+//					case 0:
+//						//sad: 3, 2
+//						int i = 0;
+//						while (i < scale) {
+//							playMusic(sadSong[i]);
+//							i++;
+//						}
+////						descriptor = getAssets().openFd(sadSong[0]);
+////						playMusic(descriptor);
+////
+////						// play the second one
+////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+////
+////							@Override
+////							public void onCompletion(MediaPlayer mp) {
+////								mp.stop();
+////								mp.reset();
+////								try {
+////									AssetFileDescriptor descriptor = getAssets().openFd(sadSong[1]);
+////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+////									mp.prepare();
+////									mp.start();
+////								} catch (Exception exception) {
+////
+////								}
+////							}
+////						});
+//						break;
+//					case 1:
+//						//happy: 1, 2
+//						// play the first one
+//						
+//						int j = 0;
+//						while (j < scale) {
+//							playMusic(happySong[j]);
+//							j++;
+//						}
+//						
+////						descriptor = getAssets().openFd(happySong[0]);
+////						playMusic(descriptor);
+////						// play the second one
+////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+////
+////							@Override
+////							public void onCompletion(MediaPlayer mp) {
+////								mp.stop();
+////								mp.reset();
+////								try {
+////									AssetFileDescriptor descriptor = getAssets().openFd(happySong[1]);
+////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+////									mp.prepare();
+////									mp.start();
+////								} catch (IOException e) {
+////									// TODO Auto-generated catch block
+////									e.printStackTrace();
+////								}
+////
+////							}
+////
+////						});
+//						break;
+//					case 2:
+//						//excited: 2, 4
+//						// play the first one
+//						
+//						int k = 0;
+//						while (k < scale) {
+//							playMusic(excitedSong[k]);
+//							k++;
+//						}
+//						
+////						descriptor = getAssets().openFd(excitedSong[0]);
+////
+////						playMusic(descriptor);
+////						// play the second one
+////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+////
+////							@Override
+////							public void onCompletion(MediaPlayer mp) {
+////								mp.stop();
+////								mp.reset();
+////								try {
+////									AssetFileDescriptor descriptor = getAssets().openFd(excitedSong[1]);
+////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+////									mp.prepare();
+////									mp.start();
+////								} catch (IOException e) {
+////									// TODO Auto-generated catch block
+////									e.printStackTrace();
+////								}
+////
+////							}
+////						});
+//						break;
+//					case 3:
+//						//angry: 3
+//						int m = 0;
+//						while (m < scale) {
+//							playMusic(angrySong[m]);
+//							m++;
+//						}
+////						descriptor = getAssets().openFd(angrySong[0]);
+////
+////						playMusic(descriptor);
+////						// play the second one
+////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+////
+////							@Override
+////							public void onCompletion(MediaPlayer mp) {
+////								mp.stop();
+////								mp.reset();
+////								try {
+////									AssetFileDescriptor descriptor = getAssets().openFd(angrySong[1]);
+////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+////									mp.prepare();
+////									mp.start();
+////								} catch (IOException e) {
+////									// TODO Auto-generated catch block
+////									e.printStackTrace();
+////								}
+////
+////							}
+////						});
+//						break;
+//					case 4:
+//						//relaxing: 5, 5
+//						int n = 0;
+//						while (n < scale) {
+//							playMusic(relaxSong[n]);
+//							n++;
+//						}
+////						descriptor = getAssets().openFd(relaxSong[0]);
+////
+////						playMusic(descriptor);
+////						// play the second one
+////						mPlayer.setOnCompletionListener(new OnCompletionListener() {
+////
+////							@Override
+////							public void onCompletion(MediaPlayer mp) {
+////								mp.stop();
+////								mp.reset();
+////								try {
+////									AssetFileDescriptor descriptor = getAssets().openFd(relaxSong[1]);
+////									mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+////									mp.prepare();
+////									mp.start();
+////								} catch (IOException e) {
+////									// TODO Auto-generated catch block
+////									e.printStackTrace();
+////								}
+////							}
+////						});
+//						break;
+//					}
+//				}
+//			} catch (IllegalArgumentException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IllegalStateException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 
+//		}
 
-		
+	}
+	
+	private void playMusic(AssetFileDescriptor descriptor) throws IllegalArgumentException, IllegalStateException, IOException {
+		mPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+		descriptor.close();
+		mPlayer.prepare();
+		mPlayer.setVolume(1.0f, 1.0f);
+		mPlayer.start();
 	}
 	
 	private AssetFileDescriptor getCategorySelector(int selectedId) throws IOException {
 		AssetFileDescriptor descriptor = getAssets().openFd("sad/Classic1.mp3");
+		// before playing the music, check the scale ratings
+//		int distanceScale = scaleRatingWheel.getCurrentItem();
 		
 		switch (selectedId) {
 		case 0:
