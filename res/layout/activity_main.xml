@@ -7,31 +7,31 @@
     android:background="#FFCCCCCC"
     android:orientation="vertical" >
 
-    <com.digitalaria.gama.wheel.Wheel
-        android:id="@+id/wheel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center_horizontal" />
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:src="@android:drawable/button_onoff_indicator_on" />
-
-    <antistatic.spinnerwheel.WheelHorizontalView
+     <antistatic.spinnerwheel.WheelHorizontalView
         android:id="@+id/scalewheel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/wheel"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
         app:selectionDivider="@drawable/divider_dark_gradient_horizontal"
         app:selectionDividerWidth="1px"
-        app:visibleItems="3" />
+        app:visibleItems="3" /> 
+
+    <com.digitalaria.gama.wheel.Wheel
+        android:id="@+id/wheel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
+
+    </com.digitalaria.gama.wheel.Wheel>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="225dp"
+        android:src="@android:drawable/button_onoff_indicator_on" />
 
 </RelativeLayout>
